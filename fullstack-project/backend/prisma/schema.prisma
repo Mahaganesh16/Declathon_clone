@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String?  @unique
+  phone     String?  @unique
+  password  String
+  role      String   @default("USER")
+  createdAt DateTime @default(now())
+
+  orders      Order[]
+  cartItems   Cart[]
+  wishlistItems Wishlist[]
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String
+
+  products Product[]
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  stock       Int
+  image       String?
+
+  categoryId  Int
+  category    Category @relation(fields: [categoryId], references: [id])
+
+  cartItems     Cart[]
+  orderItems    OrderItem[]
+  wishlistItems Wishlist[]
+}
+
+model Cart {
+  id        Int @id @default(autoincrement())
+
+  userId    Int
+  productId Int
+  quantity  Int
+
+  user       User    @relation(fields: [userId], references: [id])
+  product    Product @relation(fields: [productId], references: [id])
+}
+
+model Order {
+  id          Int      @id @default(autoincrement())
+  totalAmount Float
+  status      String   @default("PENDING")
+  createdAt   DateTime @default(now())
+
+  userId      Int
+  user        User @relation(fields: [userId], references: [id])
+
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id         Int @id @default(autoincrement())
+
+  quantity   Int
+  price      Float
+
+  orderId    Int
+  productId  Int
+
+  order      Order   @relation(fields: [orderId], references: [id])
+  product    Product @relation(fields: [productId], references: [id])
+}
+
+model Wishlist {
+  id        Int @id @default(autoincrement())
+
+  userId    Int
+  productId Int
+
+  user       User    @relation(fields: [userId], references: [id])
+  product    Product @relation(fields: [productId], references: [id])
+
+  @@unique([userId, productId]) // Prevent duplicate wishlist entries
+}
