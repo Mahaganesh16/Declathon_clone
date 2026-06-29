@@ -35,6 +35,8 @@ model Product {
   price       Float
   stock       Int
   image       String?
+  images      Json?
+  colors      Json?
 
   categoryId  Int
   category    Category @relation(fields: [categoryId], references: [id])
