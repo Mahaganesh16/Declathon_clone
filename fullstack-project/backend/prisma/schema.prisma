@@ -24,6 +24,7 @@ model User {
 model Category {
   id       Int       @id @default(autoincrement())
   name     String
+  isLayout Boolean   @default(false)
 
   products Product[]
 }
@@ -37,6 +38,7 @@ model Product {
   image       String?
   images      Json?
   colors      Json?
+  isDummy     Boolean  @default(false)
 
   categoryId  Int
   category    Category @relation(fields: [categoryId], references: [id])

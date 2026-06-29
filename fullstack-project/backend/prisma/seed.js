@@ -42,11 +42,11 @@ async function main() {
     });
   }
 
-  // Seed Trending Near You (Category 102)
   await prisma.category.create({
     data: {
       id: 102,
       name: "Trending Near You",
+      isLayout: true,
       products: {
         create: [
           { 
@@ -139,11 +139,11 @@ async function main() {
     }
   });
 
-  // Seed Workout Checklist (Category 99)
   await prisma.category.create({
     data: {
       id: 99,
       name: "Workout Checklist",
+      isLayout: true,
       products: {
         create: [
           { 
@@ -227,11 +227,11 @@ async function main() {
     }
   });
 
-  // Seed Under 499 Products (Category 104)
   await prisma.category.create({
     data: {
       id: 104,
       name: "Value Deals",
+      isLayout: true,
       products: {
         create: [
           { 
@@ -266,11 +266,11 @@ async function main() {
     }
   });
 
-  // Seed Hero Slider (Category 100)
   await prisma.category.create({
     data: {
       id: 100,
       name: "Hero Slider",
+      isLayout: true,
       products: {
         create: [
           { name: 'Find Your Racket', description: 'Elevate Your Game.', price: 299, stock: 10, image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=1400&q=80', images: ['https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=1400&q=80'], colors: ['https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=1400&q=80'] },
@@ -281,33 +281,33 @@ async function main() {
     }
   });
 
-  // Seed After Sales Services (Category 101)
   await prisma.category.create({
     data: {
       id: 101,
       name: "After Sales Services",
+      isLayout: true,
       products: {
         create: [
-          { name: 'Cycle Servicing', description: 'BOOK NOW', price: 0, stock: 10, image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=400&q=80', images: ['https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=400&q=80'], colors: ['https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=400&q=80'] },
-          { name: 'Racket Stringing', description: 'BOOK NOW', price: 0, stock: 10, image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=400&q=80', images: ['https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=400&q=80'], colors: ['https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=400&q=80'] },
-          { name: 'Buy back', description: 'Get a quote today', price: 0, stock: 10, image: 'https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?auto=format&fit=crop&w=400&q=80', images: ['https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?auto=format&fit=crop&w=400&q=80'], colors: ['https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?auto=format&fit=crop&w=400&q=80'] },
-          { name: 'Assisted Shopping', description: 'BOOK NOW', price: 0, stock: 10, image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=400&q=80', images: ['https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=400&q=80'], colors: ['https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=400&q=80'] }
+          { name: 'Cycle Servicing', description: 'BOOK NOW', price: 0, stock: 10, image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=400&q=80', images: ['https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=400&q=80'], colors: ['https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=400&q=80'], isDummy: true },
+          { name: 'Racket Stringing', description: 'BOOK NOW', price: 0, stock: 10, image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=400&q=80', images: ['https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=400&q=80'], colors: ['https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=400&q=80'], isDummy: true },
+          { name: 'Buy back', description: 'Get a quote today', price: 0, stock: 10, image: 'https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?auto=format&fit=crop&w=400&q=80', images: ['https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?auto=format&fit=crop&w=400&q=80'], colors: ['https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?auto=format&fit=crop&w=400&q=80'], isDummy: true },
+          { name: 'Assisted Shopping', description: 'BOOK NOW', price: 0, stock: 10, image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=400&q=80', images: ['https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=400&q=80'], colors: ['https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=400&q=80'], isDummy: true }
         ]
       }
     }
   });
 
-  // Seed Price Budgets (Category 103)
   await prisma.category.create({
     data: {
       id: 103,
       name: "Price Budgets",
+      isLayout: true,
       products: {
         create: [
-          { name: 'UNDER', description: '₹499', price: 499, stock: 10, image: '', images: [], colors: [] },
-          { name: 'UNDER', description: '₹999', price: 999, stock: 10, image: '', images: [], colors: [] },
-          { name: 'UNDER', description: '₹1499', price: 1499, stock: 10, image: '', images: [], colors: [] },
-          { name: 'UNDER', description: '₹1999', price: 1999, stock: 10, image: '', images: [], colors: [] }
+          { name: 'UNDER', description: '₹499', price: 499, stock: 10, image: '', images: [], colors: [], isDummy: true },
+          { name: 'UNDER', description: '₹999', price: 999, stock: 10, image: '', images: [], colors: [], isDummy: true },
+          { name: 'UNDER', description: '₹1499', price: 1499, stock: 10, image: '', images: [], colors: [], isDummy: true },
+          { name: 'UNDER', description: '₹1999', price: 1999, stock: 10, image: '', images: [], colors: [], isDummy: true }
         ]
       }
     }

@@ -44,7 +44,7 @@ export default function ProductPage() {
     async function loadData() {
       try {
         // Fetch all categories first
-        const catRes = await fetch('http://localhost:5000/api/categories', { cache: 'no-store' });
+        const catRes = await fetch('http://localhost:5000/api/categories?type=standard', { cache: 'no-store' });
         let cats = [];
         if (catRes.ok) {
           cats = await catRes.json();
@@ -486,7 +486,7 @@ export default function ProductPage() {
             ref={similarScrollRef}
             className="flex gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-4"
           >
-            {((categories.find((c: any) => c.id === product?.categoryId)?.products?.filter((p: any) => p.id !== product?.id)) || (categories.flatMap((c: any) => c.products || []).filter((p: any) => p.id !== product?.id).slice(0, 8))).map((simProduct: any) => (
+            {((categories.find((c: any) => c.id === product?.categoryId)?.products?.filter((p: any) => p.id !== product?.id && Number(p.price) > 0)) || (categories.flatMap((c: any) => c.products || []).filter((p: any) => p.id !== product?.id && Number(p.price) > 0).slice(0, 8))).map((simProduct: any) => (
               <div 
                 key={simProduct.id}
                 className="w-[240px] flex-shrink-0 bg-white border border-gray-100 rounded-lg overflow-hidden flex flex-col justify-between group relative hover:shadow-md transition-shadow"

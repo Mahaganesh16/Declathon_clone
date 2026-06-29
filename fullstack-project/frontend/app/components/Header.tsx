@@ -201,12 +201,9 @@ export default function Header() {
                             </h4>
                             <ul className="space-y-2.5">
                               {section.items.map((item, iIdx) => (
-                                <li 
-                                  key={iIdx} 
-                                  className="text-gray-600 text-[13px] font-semibold hover:text-[#0072E3] hover:translate-x-1 transition-all cursor-pointer"
-                                >
+                                <Link href={`/c/${item.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`} key={iIdx} className="block text-gray-600 text-[13px] font-semibold hover:text-[#0072E3] hover:translate-x-1 transition-all cursor-pointer">
                                   {item}
-                                </li>
+                                </Link>
                               ))}
                             </ul>
                           </div>

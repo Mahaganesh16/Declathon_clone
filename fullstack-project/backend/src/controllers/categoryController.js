@@ -3,10 +3,21 @@ const prisma = require('../config/prisma');
 class CategoryController {
   async getAll(req, res) {
     try {
-      // Pull categories and include the child products data from your MySQL relations
+      const type = req.query.type;
+      
+      const filter = {};
+      if (type === 'layout') {
+        filter.isLayout = true;
+      } else if (type === 'standard') {
+        filter.isLayout = false;
+      }
+      
       const categories = await prisma.category.findMany({
+        where: filter,
         include: {
-          products: true
+          products: filter.isLayout === true ? true : {
+            where: { isDummy: false }
+          }
         }
       });
       return res.status(200).json(categories);

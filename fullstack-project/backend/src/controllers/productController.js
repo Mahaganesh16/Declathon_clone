@@ -5,7 +5,7 @@ exports.getProducts = async (req, res) => {
   try {
     const { maxPrice } = req.query;
     
-    let whereClause = {};
+    let whereClause = { isDummy: false };
     if (maxPrice) {
       whereClause.price = {
         lte: parseFloat(maxPrice)

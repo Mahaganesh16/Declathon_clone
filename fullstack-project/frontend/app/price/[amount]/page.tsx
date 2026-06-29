@@ -29,7 +29,9 @@ export default function PricePage({ params }: { params: Promise<{ amount: string
       try {
         const res = await fetch(`http://localhost:5000/api/products?maxPrice=${amount}`, { cache: 'no-store' });
         const data = await res.json();
-        setProducts(data);
+        // Filter out zero-price products and layout mock items
+        const filteredData = Array.isArray(data) ? data.filter((p: any) => Number(p.price) > 0 && p.name !== 'UNDER') : [];
+        setProducts(filteredData);
       } catch (error) {
         console.error("Failed to fetch products:", error);
       } finally {
@@ -49,7 +51,7 @@ export default function PricePage({ params }: { params: Promise<{ amount: string
         <div className="w-full md:w-64 flex-shrink-0 space-y-6 hidden md:block">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-extrabold text-sm">Filters (1)</h3>
-            <button className="text-blue-600 font-semibold text-sm">Clear all ×</button>
+            <button suppressHydrationWarning className="text-blue-600 font-semibold text-sm">Clear all ×</button>
           </div>
           
           <div className="flex gap-2 mb-6">

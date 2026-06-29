@@ -10,7 +10,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 export default function DecathlonHome() {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [regularCategories, setRegularCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -43,9 +44,21 @@ export default function DecathlonHome() {
   useEffect(() => {
     async function fetchDatabaseCatalog() {
       try {
-        const response = await fetch('http://localhost:5000/api/categories', { cache: 'no-store' });
-        const data = await response.json();
-        setCategories(Array.isArray(data) ? data : []);
+        const [layoutRes, standardRes] = await Promise.all([
+          fetch('http://localhost:5000/api/categories?type=layout', { cache: 'no-store' }),
+          fetch('http://localhost:5000/api/categories?type=standard', { cache: 'no-store' })
+        ]);
+        
+        const layoutData = await layoutRes.json();
+        const standardData = await standardRes.json();
+        
+        const filteredLayoutData = (Array.isArray(layoutData) ? layoutData : []).map(cat => ({
+          ...cat,
+          products: cat.products ? cat.products.filter((p: any) => Number(p.price) > 0 || p.isDummy) : []
+        }));
+        
+        setCategories(filteredLayoutData);
+        setRegularCategories(Array.isArray(standardData) ? standardData : []);
       } catch (error) {
         console.error("Error loading records from API:", error);
       } finally {
@@ -225,9 +238,7 @@ export default function DecathlonHome() {
   const servicesCategory = categories.find(c => Number(c.id) === 101);
   const serviceCards = servicesCategory && servicesCategory.products ? servicesCategory.products : [];
 
-  const regularCategories = categories.filter(
-    c => ![99, 100, 101, 102, 103].includes(Number(c.id))
-  );
+  // `regularCategories` is now fetched directly from ?type=standard
 
   return (
     <div className="w-full min-h-screen bg-white text-gray-900 font-sans antialiased flex flex-col justify-between">
@@ -357,6 +368,18 @@ export default function DecathlonHome() {
               })
             ) : (
               <p className="col-span-full text-center py-10 text-gray-400 text-sm">No layout categories found in database.</p>
+            )}
+            
+            {/* View All Card */}
+            {regularCategories.length > 0 && (
+              <div className="bg-white p-1.5 shadow-sm border border-gray-200 transition-all duration-200 hover:shadow-md flex flex-col group cursor-pointer h-full">
+                <div className="relative h-48 w-full bg-gray-50 flex flex-col items-center justify-center space-y-3 text-gray-700 hover:bg-[#0072E3] hover:text-white transition-colors">
+                  <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-900 transition-colors duration-300">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                  </div>
+                  <span className="text-[13px] font-extrabold tracking-tight">View All Categories</span>
+                </div>
+              </div>
             )}
           </div>
         </div>
